@@ -26,7 +26,7 @@ cd terminology_service
 Установка виртуального окружения и зависимостей:
 
 ```bash
-python -m venv venv && source venv/bin/activate && pip install -r req.txt
+python -m venv venv && source venv/bin/activate && pip install -r requirements.txt
 ```
 
 Применение миграций:
