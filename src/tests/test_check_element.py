@@ -2,6 +2,7 @@ from urllib.parse import urlencode
 
 import pytest
 from django.urls import reverse
+from rest_framework import status
 
 
 @pytest.mark.django_db
@@ -10,7 +11,7 @@ def test_check_element_with_no_version(client):
     query_params = {"code": "1-1", "value": "1-1"}
     query_string = urlencode(query_params)
     response = client.get(path=f"{base_url}?{query_string}")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     assert response.json() == {"element_exists": True}
 
 
@@ -20,7 +21,7 @@ def test_check_element_with_version_1(client):
     query_params = {"code": "1-1", "value": "1-1", "version": "1.0"}
     query_string = urlencode(query_params)
     response = client.get(path=f"{base_url}?{query_string}")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     assert response.json() == {"element_exists": True}
 
 
@@ -30,7 +31,7 @@ def test_check_element_with_version_2(client):
     query_params = {"code": "1-1", "value": "1-1", "version": "2.0"}
     query_string = urlencode(query_params)
     response = client.get(path=f"{base_url}?{query_string}")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     assert response.json() == {"element_exists": False}
 
 
@@ -40,7 +41,7 @@ def test_check_element_with_non_existing_refbook_id(client):
     query_params = {"code": "1-1", "value": "1-1", "version": "2.0"}
     query_string = urlencode(query_params)
     response = client.get(path=f"{base_url}?{query_string}")
-    assert response.status_code == 404
+    assert response.status_code == status.HTTP_404_NOT_FOUND
     assert response.json() == {"detail": "No ReferenceBook matches the given query."}
 
 
@@ -50,7 +51,7 @@ def test_check_element_without_code(client):
     query_params = {"value": "1-1", "version": "2.0"}
     query_string = urlencode(query_params)
     response = client.get(path=f"{base_url}?{query_string}")
-    assert response.status_code == 400
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert response.json() == {
         "detail": "Missing required query parameters: code and value"
     }
@@ -62,7 +63,7 @@ def test_check_element_without_value(client):
     query_params = {"code": "1-1", "version": "2.0"}
     query_string = urlencode(query_params)
     response = client.get(path=f"{base_url}?{query_string}")
-    assert response.status_code == 400
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert response.json() == {
         "detail": "Missing required query parameters: code and value"
     }
