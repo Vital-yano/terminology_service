@@ -41,10 +41,16 @@ python manage.py migrate
 python manage.py create_initial_superuser
 ```
 
-Запуск тестов
+Запуск тестов:
 
 ```bash
 pytest
+```
+
+Запуск приложения:
+
+```bash
+python manage.pu runserver
 ```
 
 Swagger расположен по адресу:
